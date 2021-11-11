@@ -4,55 +4,120 @@ import sys
 
 class ConnectFour():
 
-	def __init__(self, heigth=6, width=7, lineLenToWin=4) -> None:
+	def __init__(self, nbRow=6, nbColumn=7, lineLenToWin=4) -> None:
 		self._board = []
-		self._height = heigth
-		self._width = width
+		self._nbRow = nbRow
+		self._nbColumn = nbColumn
 		self._lineLenToWin = lineLenToWin
 		self.__createBoard()
 		pass
 
 	def __repr__(self) -> str:
 		string = ""
-		for y in range(self._height):
-			for x in range(self._width):
+		for y in range(self._nbRow):
+			for x in range(self._nbColumn):
 				string += self._board[y][x]
-			string += "\n"
+			if y != len(self._nbRow):
+				string += "\n"
 		return string
 	
 	def __str__(self) -> str:
 		string = ""
-		for y in range(self._height):
-			for x in range(self._width):
+		for y in range(self._nbRow):
+			for x in range(self._nbColumn):
 				string += self._board[y][x]
-			string += "\n"
+			if y != self._nbRow - 1:
+				string += "\n"
 		return string
 	
 	def resetBoard(self) -> None:
 		self.__createBoard()
 
 	def __createBoard(self) -> None:
-		self._board = [['0' for i in range(self._width)] for y in range(self._height)]
+		self._board = [['0' for i in range(self._nbColumn)] for y in range(self._nbRow)]
 
 	def isColumnFull(self, column) -> bool:
-		if self.getDiscColumnHeight(column) <= -1:
+		if self.getDiscColumnRow(column) <= -1:
 			return True
 		return False
 
 	def addDisc(self, column, discStyle) -> bool:
-		if column >= self._width:
+		if column >= self._nbColumn:
 			print("Column doesn't exist", file=sys.stderr)
 			return False
 		if self.isColumnFull(column):
 			print("Column is full", file=sys.stderr)
 			return False
-		self._board[self.getDiscColumnHeight(column)][column] = discStyle
+		self._board[self.getDiscColumnRow(column)][column] = discStyle
 		return True
+	
+	def getNumberOfDiscInPlay(self, discStyle) -> int:
+		discCnt = 0
+		for row in self._board:
+			discCnt += row.count(discStyle)
+		return discCnt
 
-	def getDiscColumnHeight(self, column) -> int:
-		heigth = 0
+	def areDiscAligned(self, discStyle) -> bool:
+
+		def isAlignedDown(row, column, discStyle) -> bool:
+			if row + 3 >= self._nbRow:
+				return False
+			return (self._board[row][column] == discStyle and
+					self._board[row + 1][column] == discStyle and
+					self._board[row + 2][column] == discStyle and
+					self._board[row + 3][column] == discStyle)
+
+		def isAlignedRight(row, column, discStyle) -> bool:
+			if column + 3 >= self._nbColumn:
+				return False
+			return (self._board[row][column] == discStyle and
+					self._board[row][column + 1] == discStyle and
+					self._board[row][column + 2] == discStyle and
+					self._board[row][column + 3] == discStyle)
+
+		def isAlignedDownRight(row, column, discStyle) -> bool:
+			if column + 3 >= self._nbColumn or row + 3 >= self._nbRow:
+				return False
+			return (self._board[row][column] == discStyle and
+					self._board[row + 1][column + 1] == discStyle and
+					self._board[row + 2][column + 2] == discStyle and
+					self._board[row + 3][column + 3] == discStyle)
+		
+		def isAlignedUpRight(row, column, discStyle) -> bool:
+			if column + 3 >= self._nbColumn or row -3 <= -1:
+				return False
+			return (self._board[row][column] == discStyle and
+					self._board[row - 1][column + 1] == discStyle and
+					self._board[row - 2][column + 2] == discStyle and
+					self._board[row - 3][column + 3] == discStyle)
+
+		for row in range(self._nbRow):
+			for column in range(len(self._board[row])):
+				if isAlignedDown(row, column, discStyle):
+					return True
+				if isAlignedRight(row, column, discStyle):
+					return True
+				if isAlignedDownRight(row, column, discStyle):
+					return True
+				if isAlignedUpRight(row, column, discStyle):
+					return True
+		return False
+	
+	def haveDiscWinned(self, discsStyle) -> bool:
+
+		print(discsStyle, file=sys.stderr)
+
+		for discStyle in discsStyle:
+			if self.getNumberOfDiscInPlay(discStyle) < self._lineLenToWin:
+				continue
+			if self.areDiscAligned(discStyle):
+				return True
+		return False
+		
+	def getDiscColumnRow(self, column) -> int:
+		actualRow = 0
 		for row in self._board:
 			if row[column] != '0':
-				return heigth - 1
-			heigth += 1
-		return self._height - 1
+				return actualRow - 1
+			actualRow += 1
+		return self._nbRow - 1
