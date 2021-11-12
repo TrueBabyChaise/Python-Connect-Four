@@ -104,9 +104,6 @@ class ConnectFour():
 		return False
 	
 	def haveDiscWinned(self, discsStyle) -> bool:
-
-		print(discsStyle, file=sys.stderr)
-
 		for discStyle in discsStyle:
 			if self.getNumberOfDiscInPlay(discStyle) < self._lineLenToWin:
 				continue

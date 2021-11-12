@@ -5,7 +5,7 @@ from src.connectFour import ConnectFour
 
 class Table():
 
-	def __init__(self) -> None:
+	def __init__(self, nbPlayer = 2, nbRow = 6, nbColumn = 7, lineLenToWin = 4) -> None:
 		self.__nbPlayer = 2
 		self.__nbRow = 6
 		self.__nbColumn = 7
@@ -17,7 +17,7 @@ class Table():
 
 	def boardInit(self):
 		print("Board Init...")
-		self.__connectFour = ConnectFour()
+		self.__connectFour = ConnectFour(self.__nbRow, self.__nbColumn, self.__lineLenToWin)
 		print(self.__connectFour)
 
 	def playerInit(self):
@@ -41,4 +41,5 @@ class Table():
 				correctColumnChoose = self.__connectFour.addDisc(self.__players[playerTurn].askColumn(), self.__players[playerTurn].discStyle)
 			print(self.__connectFour)
 			playerTurn = (playerTurn + 1) % self.__nbPlayer
-		print("End")
+
+		print(self.__players[playerTurn - 1].name + " win the game !")
