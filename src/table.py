@@ -62,12 +62,12 @@ class Table():
 		return f"{self.__players[playerId].color}{self.__players[playerId].discStyle}{Color_Off}"
 
 	def boardInit(self) -> None:
-		print("Board Init...")
+		#print("Board Init...")
 		self.__connectFour = ConnectFour(self.__nbRow, self.__nbColumn, self.__lineLenToWin)
-		print(self.__connectFour)
+		#print(self.__connectFour)
 
 	def playerInit(self) -> None:
-		print("Players Init...")
+		#print("Players Init...")
 		discStyle = ['#', '%', '&', 'X', 'O'] #TMP
 		for i in range(self.__nbPlayer):
 			self.__players.append(Player(discStyle[i % len(discStyle)]))

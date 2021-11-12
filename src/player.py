@@ -11,10 +11,10 @@ class Player():
 		self.__name = ""
 
 	def __repr__(self) -> str:
-		return f"Player : {self.__name}, Disc : {self.__discStyle}, Color : {self.__color}Color{clr.Color_Off}"
+		return f"Name : {self.__name}, Disc : {self.__discStyle}, Color : {self.__color}Color{clr.Color_Off}"
 
 	def __str__(self) -> str:
-		return f"Player : {self.__name}, Disc : {self.__discStyle}, Color : {self.__color}Color{clr.Color_Off}"
+		return f"Name : {self.__name}, Disc : {self.__discStyle}, Color : {self.__color}Color{clr.Color_Off}"
 
 	@property
 	def name(self) -> str:

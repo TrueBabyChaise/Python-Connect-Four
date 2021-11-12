@@ -16,7 +16,57 @@ To use this project, you'll need python3.
 
 ### Building program
 
-To be define...
+
+```
+TERMINAL~> python3 pythonConnectFour.py
+
+Which name do you want to use ?
+ -> Player1
+Are you sure (y/n) ?
+ -> y
+Which color do you wanna play with Player1 ?
+[red, black, blue, white, yellow]
+ -> blue
+Name : Player1, Disc : #, Color : Color
+Which name do you want to use ?
+ -> Player2 
+Are you sure (y/n) ?
+ -> y
+Which color do you wanna play with Player2 ?
+[red, black, blue, white, yellow]
+ -> yellow
+Name : Player2, Disc : %, Color : Color
+Which column do you wanna play on Player1 ?
+ -> 1
+#############################
+#   #   #   #   #   #   #   #
+#   #   #   #   #   #   #   #
+#   #   #   #   #   #   #   #
+#############################
+#   #   #   #   #   #   #   #
+#   #   #   #   #   #   #   #
+#   #   #   #   #   #   #   #
+#############################
+#   #   #   #   #   #   #   #
+#   #   #   #   #   #   #   #
+#   #   #   #   #   #   #   #
+#############################
+#   #   #   #   #   #   #   #
+#   #   #   #   #   #   #   #
+#   #   #   #   #   #   #   #
+#############################
+#   #   #   #   #   #   #   #
+#   #   #   #   #   #   #   #
+#   #   #   #   #   #   #   #
+#############################
+#   #####   #   #   #   #   #
+#   #####   #   #   #   #   #
+#   #####   #   #   #   #   #
+#############################
+
+Which column do you wanna play on Player2 ?
+ ->
+```
 
 ### Coding Style
 
