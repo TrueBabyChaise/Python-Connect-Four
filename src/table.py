@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 
+import src.color as clr
+from src.IA import IA
 from src.player import Player
 from src.connectFour import ConnectFour
 from src.color import Color_Off
+import random
 
 class Table():
 
@@ -13,6 +16,7 @@ class Table():
 		self.__lineLenToWin = 4
 		self.__connectFour = None
 		self.__players = []
+		random.seed(None)
 		self.boardInit()
 		self.playerInit()
 
@@ -66,14 +70,33 @@ class Table():
 		self.__connectFour = ConnectFour(self.__nbRow, self.__nbColumn, self.__lineLenToWin)
 		#print(self.__connectFour)
 
+	def askPlayerNumber(self) -> None:
+		tmp = "a"
+		accept = "a"		
+		while accept != "yes" and accept != "y" and not tmp.isdigit():
+			tmp = input("How many people are gonna play ?\n -> ")
+			if not tmp.isdigit():
+				continue
+			accept = input("Are you sure (y/n) ?\n -> ").lower()
+		self.__nbPlayer = int(tmp)
+
 	def playerInit(self) -> None:
 		#print("Players Init...")
+		self.askPlayerNumber()
 		discStyle = ['#', '%', '&', 'X', 'O'] #TMP
+		IAName = ["Mizu", "Minato"]
+		IAColor = [clr.Red, clr.Blue]
 		for i in range(self.__nbPlayer):
 			self.__players.append(Player(discStyle[i % len(discStyle)]))
 			self.__players[i].askName()
 			self.__players[i].askColor()
-			print(self.__players[i])
+		while len(self.__players) < 2:
+			self.__players.append(IA(discStyle[len(self.__players) % len(discStyle)]))
+			self.__players[-1].name = IAName[len(self.__players) - 1]
+			self.__players[-1].color = IAColor[len(self.__players) - 1]
+		if self.__nbPlayer < 2:
+			self.__nbPlayer = 2
+		print(*self.__players, sep="\n")
 
 	def getAllDiscStyle(self) -> list[str]:
 		return [player.discStyle for player in self.__players]
@@ -83,8 +106,11 @@ class Table():
 
 		while not self.__connectFour.haveDiscWinned(self.getAllDiscStyle()):
 			correctColumnChoose = False
-			while not correctColumnChoose:
-				correctColumnChoose = self.__connectFour.addDisc(self.__players[playerTurn].askColumn(), self.__players[playerTurn].discStyle)
+			if isinstance(self.__players[playerTurn], IA):
+				correctColumnChoose = self.__connectFour.addDisc(self.__players[playerTurn].askColumn(self.__connectFour), self.__players[playerTurn].discStyle)
+			else:
+				while not correctColumnChoose:
+					correctColumnChoose = self.__connectFour.addDisc(self.__players[playerTurn].askColumn(), self.__players[playerTurn].discStyle)
 			print(self)
 			playerTurn = (playerTurn + 1) % self.__nbPlayer
 

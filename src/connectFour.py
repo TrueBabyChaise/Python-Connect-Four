@@ -42,6 +42,7 @@ class ConnectFour():
 		return False
 
 	def addDisc(self, column, discStyle) -> bool:
+		print(column)
 		if column >= self._nbColumn:
 			print("Column doesn't exist", file=sys.stderr)
 			return False
