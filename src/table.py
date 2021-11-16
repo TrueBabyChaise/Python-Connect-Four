@@ -26,26 +26,12 @@ class Table():
 	def __str__(self) -> str:
 		string = ""
 		tmpTab = [[" " for i in range(self.__nbColumn * 4)] for y in range(self.__nbRow * 4)]
+		print(self.__connectFour._board)
 		for row in range(len(self.__connectFour._board)):
 			for column in range(len(self.__connectFour._board[row])):
-				### TMP
-				tmpTab[row * 4][column  * 4] = "#"
-				tmpTab[row * 4][column * 4 + 1] = "#"
-				tmpTab[row * 4][column * 4 + 2] = "#"
-				tmpTab[row * 4][column * 4 + 3] = "#"
-				tmpTab[row * 4 + 1][column * 4] = "#"
-				tmpTab[row * 4 + 1][column * 4 + 1] = self.getCaseFormat(self.__connectFour._board[row][column])
-				tmpTab[row * 4 + 1][column * 4 + 2] = self.getCaseFormat(self.__connectFour._board[row][column])
-				tmpTab[row * 4 + 1][column * 4 + 3] = self.getCaseFormat(self.__connectFour._board[row][column])
-				tmpTab[row * 4 + 2][column * 4] = "#"
-				tmpTab[row * 4 + 2][column * 4 + 1] = self.getCaseFormat(self.__connectFour._board[row][column])
-				tmpTab[row * 4 + 2][column * 4 + 2] = self.getCaseFormat(self.__connectFour._board[row][column])
-				tmpTab[row * 4 + 2][column * 4 + 3] = self.getCaseFormat(self.__connectFour._board[row][column])
-				tmpTab[row * 4 + 3][column * 4] = "#"
-				tmpTab[row * 4 + 3][column * 4 + 1] = self.getCaseFormat(self.__connectFour._board[row][column])
-				tmpTab[row * 4 + 3][column * 4 + 2] = self.getCaseFormat(self.__connectFour._board[row][column])
-				tmpTab[row * 4 + 3][column * 4 + 3] = self.getCaseFormat(self.__connectFour._board[row][column])
-				###
+				for i in range(4):
+					for j in range(4):
+						tmpTab[row * 4 + i][column  * 4 + j] = '#' if i == 0 or j == 0 else self.getCaseFormat(self.__connectFour._board[row][column])
 
 		for line in tmpTab:
 			for letter in line:
