@@ -52,6 +52,9 @@ class Table():
 				string += letter
 			string += "#\n"
 		string += "#" * self.__nbColumn * 4 + "#\n"
+		for column in range(self.__connectFour._nbColumn):
+			string += f"  {column + 1} "
+		string +="\n"
 		return string
 	
 	def getPlayerId(self, discStyle) -> int:

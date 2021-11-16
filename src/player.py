@@ -50,4 +50,4 @@ class Player():
 		tmp = "a"
 		while not tmp.isdigit():
 			tmp = input("Which column do you wanna play on " + self._name + " ?\n -> ")
-		return int(tmp)
+		return int(tmp) - 1
