@@ -91,7 +91,7 @@ class Table():
 			self.__nbPlayer = 2
 		print(*self.__players, sep="\n")
 
-	def getAllDiscStyle(self) -> list[str]:
+	def getAllDiscStyle(self):
 		return [player.discStyle for player in self.__players]
 
 	def run(self) -> None:
