@@ -7,6 +7,8 @@ from src.connectFour import ConnectFour
 from src.color import Color_Off
 import random
 
+NOCOLOR = False
+
 class Table():
 
 	def __init__(self, nbPlayer = 2, nbRow = 6, nbColumn = 7, lineLenToWin = 4) -> None:
@@ -52,6 +54,8 @@ class Table():
 		if discStyle == '0':
 			return " "
 		playerId = self.getPlayerId(discStyle)
+		if NOCOLOR:
+			return discStyle
 		return f"{self.__players[playerId].color}{self.__players[playerId].discStyle}{Color_Off}"
 
 	def boardInit(self) -> None:

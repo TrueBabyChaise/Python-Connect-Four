@@ -53,6 +53,9 @@ class IA(Player):
 	def getBestMove(self, connectFour) -> int:
 
 		def getDownAlignedCaseCount(row, column, board):
+			if len(board) <= row:
+				print("Down Skipped", end=" ")
+				return 0
 			cnt = 0
 			for newRow in board[row:]:
 				if newRow[column] != self.discStyle:
@@ -72,7 +75,11 @@ class IA(Player):
 		
 		def getLeftAlignedCaseCount(row, column, board):
 			cnt = 0
-			for case in range(len(board[row][:column]), -1, -1):
+			if len(board[row][:column]) == 0:
+				return 0
+			tmp = board[row][:column].copy()
+			tmp.reverse()
+			for case in tmp:
 				if case != self.discStyle:
 					break
 				cnt += 1
@@ -80,35 +87,43 @@ class IA(Player):
 			return cnt
 		
 		def getLeftDownAlignedCaseCount(row, column, board):
+			if len(board) <= row:
+				print('LeftDown Skipped', end=" ")
+				return 0
 			cnt = 0
 			for newRow in range(row, len(board[row:])):
 				for newColumn in range(len(board[newRow][:column]), -1, -1):
 					if board[newRow][newColumn] != self.discStyle:
-						break
+						print(cnt, "LeftDown", end=" ")
+						return cnt
 					cnt += 1
 			print(cnt, "LeftDown", end=" ")
 			return cnt
 
 		def getRightDownAlignedCaseCount(row, column, board):
+			if len(board) <= row:
+				print('RightDown Skipped', end=" ")
+				return 0
 			cnt = 0
 			for newRow in range(row, len(board[row:])):
 				for newColumn in range(column, len(board[newRow][column:])):
 					if board[newRow][newColumn] != self.discStyle:
-						break
+						print(cnt, "RightDown", end=" ")
+						return cnt
 					cnt += 1
 			print(cnt, "RightDown", end=" ")
 			return cnt
 
 		def getMaxAlignedCase(row, column, board):
-			max = getDownAlignedCaseCount(row, column, board)
+			max = getDownAlignedCaseCount(row + 1, column, board)
 			tmp = getLeftAlignedCaseCount(row, column, board)
-			tmp += getRightAlignedCaseCount(row, column, board)
+			tmp += getRightAlignedCaseCount(row, column + 1, board)
 			if tmp > max:
 				max = tmp
-			tmp = getLeftDownAlignedCaseCount(row, column, board)
+			tmp = getLeftDownAlignedCaseCount(row + 1, column, board)
 			if tmp > max:
 				max = tmp
-			tmp = getRightDownAlignedCaseCount(row, column, board)
+			tmp = getRightDownAlignedCaseCount(row + 1, column, board)
 			if tmp > max:
 				max = tmp
 			return max
@@ -118,7 +133,6 @@ class IA(Player):
 		for column in range(connectFour._nbColumn):
 			print("Column :", column)
 			tmp = getMaxAlignedCase(connectFour.getDiscColumnRow(column), column, connectFour._board)
-			print(tmp)
 			if tmp > max:
 				max = tmp
 				posColumn = column
